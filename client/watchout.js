@@ -15,8 +15,13 @@
 //   y: d3.scale.linear().domain([0,100]).range([0,gameOptions.height])
 // };
 
-d3.select('body')
-.append('svg').attr('width', 1000).attr('height', 1000).attr('border', '1px solid black');
+d3.selectAll('body')
+.append('svg').attr('width', 1000).attr('height', 1000).attr('border', '1px solid black')
+.append('circle')
+.attr("cx", 100)
+.attr("cy", 100)
+.attr("r", 10)
+.attr("fill", '#ff6600');
 
 
 // updateScoreBoard = ->
@@ -36,9 +41,7 @@ class Player {
 
 
 
-d3.select('body').selectAll('div').append('svg')
-.attr("width", 200).attr("height", 200)
-.append('circle')
+d3.select('svg').append('circle')
 .attr("cx", 100)
 .attr("cy", 100)
 .attr("r", 10)
