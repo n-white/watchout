@@ -1,8 +1,9 @@
 // number of enemies
 var numOfEnemies = 10;
-
-
-
+var hasCollided = false;
+var highScore = 0;
+var currentScore = 0;
+var collisions = 0;
 
 // svg board properties
 var dimensions = {
@@ -53,9 +54,10 @@ var moveEnemies = function() {
   d3.selectAll('.enemyDots')
   .data(enemyPositions)
   .transition()
-  .delay(1000)
+  .duration(10000)
   .attr('cx', function(d){return d[0]; })
-  .attr('cy', function(d){return d[1]; });
+  .attr('cy', function(d){return d[1]; })
+  .ease('elastic');
 };
 
 var drag = d3.behavior.drag()
@@ -95,9 +97,20 @@ var checkCollision = function() {
     var diffX = eX - pX;
     var diffY = eY - pY;
     var distance = Math.sqrt(Math.pow(diffX, 2) + Math.pow(diffY, 2));
-    if (distance < 50) {
+    // var hasColliding = false
+    if (!hasCollided && distance < 50) {
       console.log(distance);
-      d3.select('.collisions').select('span').text(100);
+      collisions++;
+      d3.select('.collisions span').text(collisions);
+      hasCollided = true;
+      if (currentScore > highScore) {
+        highScore = currentScore;
+        d3.select('.highscore span').text(highScore);
+      }
+      setTimeout(function() {
+        hasCollided = false;
+      }, 1000);
+
     }
   }
 };
@@ -109,11 +122,14 @@ generateEnemies();
 player();
 checkCollision();
 
-setInterval(function(){
+setInterval (function() {
   moveEnemies();
-}, 1000);
+  currentScore++;
+  d3.select('.current span').text(currentScore);
+}, 2000);
 
-setInterval(function() {
+
+setInterval (function() {
   checkCollision();
-}, 0.5);
+}, 1);
 
