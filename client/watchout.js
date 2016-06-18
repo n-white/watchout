@@ -82,13 +82,38 @@ var player = function() {
   .attr('fill', 'red')
   .call(drag); 
 
+var checkCollision = function() {
+  // collect all enemy dots
+  var enemies = d3.selectAll('.enemyDots')[0];
+  var player = d3.select('.playerDot')[0];
+  // create an each loop to examine position of each enemy
+  for (var i = 0; i < enemies.length; i++ ) {
+    var eX = enemies[i].__data__[0];
+    var eY = enemies[i].__data__[1];
+    var pX = player[0].__data__[0];
+    var pY = player[0].__data__[1];
+    var diffX = eX - pX;
+    var diffY = eY - pY;
+    var distance = Math.sqrt(Math.pow(diffX, 2) + Math.pow(diffY, 2));
+    if (distance < 50) {
+      console.log(distance);
+      d3.select('.collisions').select('span').text(100);
+    }
+  }
+};
+
 
 // initiation of enemies, positions, player and movement
 generateEnemyPositions();
 generateEnemies();
 player();
-
+checkCollision();
 
 setInterval(function(){
   moveEnemies();
 }, 1000);
+
+setInterval(function() {
+  checkCollision();
+}, 0.5);
+
