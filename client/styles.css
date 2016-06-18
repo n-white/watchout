@@ -1,12 +1,16 @@
 
+
+
 svg {
   border: 1px solid black;
+  background-color: black;
 }
 
 .enemyDots {
-
+/*  background-image: url('images/ghost.gif'); 
+  position: absolute;*/
 }
 
 .playerDot {
-  
+
 }
