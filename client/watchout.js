@@ -1,52 +1,67 @@
-// // start slingin' some d3 here.
 
-// var stats = {
-//   score: 0,
-//   highScore: 0
-// };
+// svg board properties
+var dimensions = {
+  width: 500,
+  height: 500
+};
 
-// gameOptions: {
-//   width: 50px,
-//   height: 50px
-// }
-
-// var axes = {
-//   x: d3.scale.linear().domain([0,100]).range([0,gameOptions.width]),
-//   y: d3.scale.linear().domain([0,100]).range([0,gameOptions.height])
-// };
-
-d3.selectAll('body')
-.append('svg').attr('width', 1000).attr('height', 1000).attr('border', '1px solid black')
-.append('circle')
-.attr("cx", 100)
-.attr("cy", 100)
-.attr("r", 10)
-.attr("fill", '#ff6600');
+//append svg board to body
+var boardTest = d3.selectAll('body')
+.append('svg').attr('width', dimensions.width).attr('height', dimensions.height).attr('border', '1px solid black');
 
 
-// updateScoreBoard = ->
-//   d3.select(".current").select('.childNode').text(stats.score.toString())
+//append enemies to svg board randomly
+var enemyPositions = [];
 
+var generateEnemyPositions = function(number) {
+  var randomX, randomY;
 
-class Player {
-  
-  constructor () {
-    fill = '#ff6600';
-    cx = 100;
-    cy = 100;
-    r = 10;    
+  for (var i = 0; i < number; i++ ) { 
+    randomX = Math.floor(Math.random() * dimensions.width);
+    randomY = Math.floor(Math.random() * dimensions.height);
+    enemyPositions.push([randomX, randomY]);
   }
 
-}
+};
+
+
+var generateEnemies = function(numOfEnemies) {
+
+  var randomX = Math.floor(Math.random() * dimensions.width);
+  var randomY = Math.floor(Math.random() * dimensions.height);
+
+  // d3.select('svg')
+  // .append('circle')
+  // .attr("cx", randomX)
+  // .attr("cy", randomY)
+  // .attr("r", 10)
+  // .attr("fill", '#ff6600');
+
+  
+
+
+};
 
 
 
-d3.select('svg').append('circle')
-.attr("cx", 100)
-.attr("cy", 100)
-.attr("r", 10)
-.attr("fill", '#ff6600');
 
-// d3.select('body').append('svg')
-// .attr("width", 200).attr("height", 200)
-// .append(new Player());
+
+
+// move player to random position every 2 seconds
+var moveEnemies = function() {
+  d3.selectAll('circle')
+.data(enemyPositions)
+.transition()
+.delay(2000)
+.attr('cy', function(x, y) { return y; })
+.attr('cx', function(x, y) { return x; });
+};
+
+
+generateEnemyPositions(2);
+
+
+
+// setInterval(function(){
+//   moveEnemies();
+// }, 1000);
