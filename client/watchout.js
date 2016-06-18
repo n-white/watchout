@@ -18,6 +18,7 @@ var boardTest = d3.selectAll('body')
 var enemyPositions = [];
 
 var generateEnemyPositions = function() {
+  
   var randomX, randomY;
   enemyPositions = [];
 
@@ -40,13 +41,13 @@ var generateEnemies = function () {
   .attr('cx', function(d){return d[0]; })
   .attr('cy', function(d){return d[1]; })
   .attr('r', 10)
-  .attr('fill', '#000');  
+  .style('fill', '#000');  
 };
 
 // move player to random position every 2 seconds
 var moveEnemies = function() {
 
-  generateEnemyPositions(numOfEnemies);
+  generateEnemyPositions();
 
   d3.selectAll('circle')
   .data(enemyPositions)
@@ -56,8 +57,21 @@ var moveEnemies = function() {
   .attr('cy', function(d){return d[1]; });
 };
 
-generateEnemyPositions(numOfEnemies);
+var player = function() {
+  d3.select('svg')
+  .append('circle')
+  .attr('cx', dimensions.width / 2)
+  .attr('cy', dimensions.height / 2)
+  .attr('r', 10)
+  .attr('fill', 'red')
+  // .call(force.drag); 
+};
+
+
+// initiation of enemies, positions, player and movement
+generateEnemyPositions();
 generateEnemies();
+player();
 
 
 setInterval(function(){
