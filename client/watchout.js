@@ -38,6 +38,7 @@ var generateEnemies = function () {
   .data(enemyPositions)
   .enter()
   .append('circle')
+  .classed('enemyDots', true)
   .attr('cx', function(d){return d[0]; })
   .attr('cy', function(d){return d[1]; })
   .attr('r', 10)
@@ -49,7 +50,7 @@ var moveEnemies = function() {
 
   generateEnemyPositions();
 
-  d3.selectAll('circle')
+  d3.selectAll('.enemyDots')
   .data(enemyPositions)
   .transition()
   .delay(1000)
@@ -57,15 +58,29 @@ var moveEnemies = function() {
   .attr('cy', function(d){return d[1]; });
 };
 
+var drag = d3.behavior.drag()
+    .on("drag", dragged);
+
+
+
+function dragged(d) {
+  d3.select(this).attr("cx", d.x = d3.event.x).attr("cy", d.y = d3.event.y);
+}
+
+
+
+
+
 var player = function() {
+};
   d3.select('svg')
   .append('circle')
+  .classed('playerDot', true)
   .attr('cx', dimensions.width / 2)
   .attr('cy', dimensions.height / 2)
   .attr('r', 10)
   .attr('fill', 'red')
-  // .call(force.drag); 
-};
+  .call(drag); 
 
 
 // initiation of enemies, positions, player and movement
