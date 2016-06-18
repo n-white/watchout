@@ -1,3 +1,8 @@
+// number of enemies
+var numOfEnemies = 10;
+
+
+
 
 // svg board properties
 var dimensions = {
@@ -9,14 +14,14 @@ var dimensions = {
 var boardTest = d3.selectAll('body')
 .append('svg').attr('width', dimensions.width).attr('height', dimensions.height).attr('border', '1px solid black');
 
-
-//append enemies to svg board randomly
+// generate random enemy positions
 var enemyPositions = [];
 
-var generateEnemyPositions = function(number) {
+var generateEnemyPositions = function() {
   var randomX, randomY;
+  enemyPositions = [];
 
-  for (var i = 0; i < number; i++ ) { 
+  for (var i = 0; i < numOfEnemies; i++ ) { 
     randomX = Math.floor(Math.random() * dimensions.width);
     randomY = Math.floor(Math.random() * dimensions.height);
     enemyPositions.push([randomX, randomY]);
@@ -24,51 +29,37 @@ var generateEnemyPositions = function(number) {
 
 };
 
-var tempArray = [[100, 200], [300, 400]]
-
-
-var generateEnemies = function() {
-
-  var randomX = Math.floor(Math.random() * dimensions.width);
-  var randomY = Math.floor(Math.random() * dimensions.height);
-
-  // d3.select('svg')
-  // .append('circle')
-  // .attr("cx", randomX)
-  // .attr("cy", randomY)
-  // .attr("r", 10)
-  // .attr("fill", '#ff6600');
-
-};
-
+// generate enemies
+var generateEnemies = function () {
 
   d3.select('svg')
   .selectAll('circle')
-  .data(tempArray)
+  .data(enemyPositions)
   .enter()
   .append('circle')
   .attr('cx', function(d){return d[0]; })
   .attr('cy', function(d){return d[1]; })
   .attr('r', 10)
-  .attr('fill', '#ff6600');
-
-
-
-
+  .attr('fill', '#000');  
+};
 
 // move player to random position every 2 seconds
 var moveEnemies = function() {
+
+  generateEnemyPositions(numOfEnemies);
+
   d3.selectAll('circle')
-.data(enemyPositions)
-.transition()
-.delay(2000)
-.attr('cy', function(x, y) { return y; })
-.attr('cx', function(x, y) { return x; });
+  .data(enemyPositions)
+  .transition()
+  .delay(1000)
+  .attr('cx', function(d){return d[0]; })
+  .attr('cy', function(d){return d[1]; });
 };
 
+generateEnemyPositions(numOfEnemies);
+generateEnemies();
 
 
-
-// setInterval(function(){
-//   moveEnemies();
-// }, 1000);
+setInterval(function(){
+  moveEnemies();
+}, 1000);
