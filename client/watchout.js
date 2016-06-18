@@ -24,8 +24,10 @@ var generateEnemyPositions = function(number) {
 
 };
 
+var tempArray = [[100, 200], [300, 400]]
 
-var generateEnemies = function(numOfEnemies) {
+
+var generateEnemies = function() {
 
   var randomX = Math.floor(Math.random() * dimensions.width);
   var randomY = Math.floor(Math.random() * dimensions.height);
@@ -37,11 +39,18 @@ var generateEnemies = function(numOfEnemies) {
   // .attr("r", 10)
   // .attr("fill", '#ff6600');
 
-  
-
-
 };
 
+
+  d3.select('svg')
+  .selectAll('circle')
+  .data(tempArray)
+  .enter()
+  .append('circle')
+  .attr('cx', function(d){return d[0]; })
+  .attr('cy', function(d){return d[1]; })
+  .attr('r', 10)
+  .attr('fill', '#ff6600');
 
 
 
@@ -57,8 +66,6 @@ var moveEnemies = function() {
 .attr('cx', function(x, y) { return x; });
 };
 
-
-generateEnemyPositions(2);
 
 
 
