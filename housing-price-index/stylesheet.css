@@ -1,0 +1,12 @@
+body {
+ background-color: #FFF;
+}
+
+svg {
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+}
+
+.nodes {
+  background-color: blue;
+}
